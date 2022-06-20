@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "sourceMap": true,
+        "removeComments": false,
+        "outDir": "build",
+        "allowJs": false,
+        "target": "es2017",
+        "watch": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "experimentalDecorators": true
+    },
+    "include": [
+        "*.ts",
+        "src/Data.ts",
+    ],
+    "exclude": [
+        "coverage",
+        "node_modules",
+        "!node_modules/@types",
+        "**/*.spec.ts"
+    ]
+}
