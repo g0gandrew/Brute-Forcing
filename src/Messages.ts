@@ -1,18 +1,15 @@
-import { ReadLine } from "readline";
+// Importing
+import Input from './Input'
+//
 
 class Message {
-    private static readline: ReadLine;
-
     constructor() {
-        Message.readline = require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout,
-        });
+    
     }
 
     public static alreadyMember(): boolean {
         let userAlreadyRegisterd: boolean = false;
-        this.readline.question(`Are you already registerd? [Y/N]`, (answer: string) => {
+        Input.question(`Are you already registerd? [Y/N]`, (answer: string) => {
             userAlreadyRegisterd = answer === 'Y' ? true : false;
         })
 
@@ -30,9 +27,7 @@ class Message {
     public static userWantsToTryAgain(): boolean {
         let userWantsToTryAgain: boolean = false;
         console.log(`Incorrect authentication data!`);
-        this.readline.question(`Would you like to try again? [Y/N]`, (answer: string) => {
-            userWantsToTryAgain = answer === 'Y' ? true : false;
-        })
+      
 
         return userWantsToTryAgain;
     }

@@ -38,10 +38,16 @@ class User {
         }
     }
     async registerDataValidation() {
+        // Too short
         if (this.username && this.username.length < 5)
             throw new Errors_1.FailedAuthentication('You failed the authentication, username too short! (Minimum 5 characters)');
         if (this.password && this.password.length < 8)
             throw new Errors_1.FailedAuthentication('You failed the authentication, password too short! (Minimum 8 characters)');
+        // Too long
+        if (this.username && this.username.length > 20)
+            throw new Errors_1.FailedAuthentication('You failed the authentication, username too long! (Maximum 20 characters allowed)');
+        if (this.password && this.password.length > 25)
+            throw new Errors_1.FailedAuthentication('You failed the authentication, password too long! (Maximum 25 characters allowed)');
     }
     async accountExists() {
         const accountExists = await Database_1.default.query(`SELECT id FROM user WHERE username = '${this.username}' && password = '${this.password}'`, { type: types_1.QueryTypes.SELECT });

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // Importing
+const Errors_1 = require("./src/Errors/Errors");
 const Messages_1 = require("./src/Messages");
 const User_1 = require("./src/User");
 //
@@ -11,12 +12,12 @@ class BruteForce {
     async start() {
         let active = true;
         while (active) {
-            Messages_1.default.alreadyMember() ? this.user.registration() : this.user.authentication();
             try {
-                this.user.registration(); // Displaying registration session
+                Messages_1.default.alreadyMember() ? this.user.authentication() : this.user.registration(); // Displaying session
             }
             catch (e) {
                 console.log(e.message);
+                (0, Errors_1.handleError)(e);
             }
         }
     }

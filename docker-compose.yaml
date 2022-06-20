@@ -1,0 +1,37 @@
+version: '3.3'
+services:
+  mysql:
+    container_name: mysqlSecuritate
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_DATABASE=securitate
+      - MYSQL_USER=andrei
+      - MYSQL_PASSWORD=andrei
+      - MYSQL_ROOT_PASSWORD=andrei
+      - TZ=Europe/Bucharest 
+    ports:
+      - '3306:3306'
+    volumes:
+      - './mysql:/var/lib/mysql'
+    networks:
+      - database
+  phpmyadmin:
+    container_name: phpmyadminSecuritate
+    image: phpmyadmin:latest
+    restart: always
+    depends_on:
+      - 'mysql'
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_DB=securitate
+      - PMA_USER=andrei
+      - PMA_PASSWORD=andrei
+    networks:
+      - database
+networks:
+  database:
+    driver: bridge

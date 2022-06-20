@@ -4,6 +4,4 @@ interface RegistrationCredentials {
     ip: string
 }
 
-
-
 export { RegistrationCredentials }

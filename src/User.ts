@@ -1,8 +1,8 @@
 // Importing
-import { ReadLine } from "readline";
+import Input from './Input';
 import { FailedAuthentication, handleError } from "./Errors/Errors";
 import db from './Database';
-import { QueryTypes } from "sequelize/types";
+import { QueryTypes } from"sequelize/types";
 import Message from "./Messages";
 const ip = require('ip');
 //
@@ -11,21 +11,15 @@ class User {
     private username: string | undefined;
     private password: string | undefined;
     private ip: string | undefined;
-    private readline: ReadLine;
     constructor() {
-        this.readline = require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout,
-        });
-
         this.ip = ip.address(); // Getting user IP address
     }
     public async registration(): Promise<void> {
-        this.readline.question('Enter your username: ', username => {
+        Input.question('Enter your username: ', (username: string) => {
             this.username = username;
         })
 
-        this.readline.question('Enter your password: ', pass => {
+        Input.question('Enter your password: ', (pass: string) => {
             this.password = pass
         })
 
@@ -33,12 +27,12 @@ class User {
     }
 
     public async authentication(): Promise<void> {
-        this.readline.question('Enter your username: ', username => {
+        Input.question('Enter your username: ', (username: string) => {
             this.username = username;
         })
 
-        this.readline.question('Enter your password: ', pass => {
-            this.password = pass
+        Input.question('Enter your password: ', (pass: string) => {
+            this.password = pass;
         })
 
         if (await this.accountExists())
@@ -50,10 +44,18 @@ class User {
     }
 
     private async registerDataValidation() {
+        // Too short
         if (this.username && this.username.length < 5)
             throw new FailedAuthentication('You failed the authentication, username too short! (Minimum 5 characters)');
         if (this.password && this.password.length < 8)
             throw new FailedAuthentication('You failed the authentication, password too short! (Minimum 8 characters)');
+        
+        // Too long
+        if(this.username && this.username.length > 20)
+             throw new FailedAuthentication('You failed the authentication, username too long! (Maximum 20 characters allowed)');
+        if (this.password && this.password.length > 25)
+             throw new FailedAuthentication('You failed the authentication, password too long! (Maximum 25 characters allowed)');
+
     }
 
     private async accountExists(): Promise<boolean> {
@@ -63,7 +65,6 @@ class User {
         else
             return false;
     }
-
 
     private async register() {
         try {
