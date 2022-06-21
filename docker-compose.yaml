@@ -1,11 +1,11 @@
 version: '3.3'
 services:
   mysql:
-    container_name: mysqlSecuritate
+    container_name: mysqlSecuritate2
     image: mysql:latest
     restart: always
     environment:
-      - MYSQL_DATABASE=securitate
+      - MYSQL_DATABASE=mentorship
       - MYSQL_USER=andrei
       - MYSQL_PASSWORD=andrei
       - MYSQL_ROOT_PASSWORD=andrei
@@ -17,7 +17,7 @@ services:
     networks:
       - database
   phpmyadmin:
-    container_name: phpmyadminSecuritate
+    container_name: phpmyadminSecuritate2
     image: phpmyadmin:latest
     restart: always
     depends_on:
@@ -27,7 +27,7 @@ services:
     environment:
       - PMA_HOST=mysql
       - PMA_PORT=3306
-      - PMA_DB=securitate
+      - PMA_DB=mentorship
       - PMA_USER=andrei
       - PMA_PASSWORD=andrei
     networks:

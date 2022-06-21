@@ -1,6 +1,6 @@
 // Importing
 import { FailedIntro } from './Errors/Errors';
-import Input from './Input'
+import {question} from './Helpers'
 //
 
 class Message {
@@ -10,14 +10,8 @@ class Message {
 
     public static async alreadyMember(): Promise<boolean> {
         console.log('Welcome to Brute Force Application @ Gog Andrei');
-        const userAlreadyRegisterd: string = await Input.text(`Are you already registerd? [Y/N]`);
-
-        if (userAlreadyRegisterd.toLocaleLowerCase() === 'y')
-            return true;
-        else if (userAlreadyRegisterd.toLocaleLowerCase() === 'n')
-            return false;
-
-        throw new FailedIntro('You entered a wrong choice')
+        const answer: boolean = await question('Are you already registerd? [Y/N]')
+        return answer;
     }
 
     public static registration(): void {
@@ -27,12 +21,8 @@ class Message {
     public static sucessfulAuthenticated(): void {
         console.log('Welcome to Brute Force Application @ Gog Andrei');
     }
-    public static userWantsToTryAgain(): boolean {
-        let userWantsToTryAgain: boolean = false;
-        console.log(`Incorrect authentication data!`);
 
-        return userWantsToTryAgain;
-    }
+    
 }
 
 export default Message;

@@ -6,7 +6,6 @@ import User from "./src/User"
 
 class BruteForce {
     private user: User;
-    private operationsMade: number = 0;
     constructor() {
         this.user = new User();
     }
@@ -17,16 +16,16 @@ class BruteForce {
         while (active) {
             try {
                 await Message.alreadyMember() ? await this.user.authentication() : await this.user.registration();// Displaying session
+                active = false;
 
             } catch (e: any) {
+                console.log(e)
                 handleError(e);
+                active = false;
                 return;
             }
+
         }
-    }
-
-    private async importData() {
-
     }
 }
 

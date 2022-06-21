@@ -7,7 +7,6 @@ const User_1 = require("./src/User");
 //
 class BruteForce {
     constructor() {
-        this.operationsMade = 0;
         this.user = new User_1.default();
     }
     async start() {
@@ -15,14 +14,15 @@ class BruteForce {
         while (active) {
             try {
                 await Messages_1.default.alreadyMember() ? await this.user.authentication() : await this.user.registration(); // Displaying session
+                active = false;
             }
             catch (e) {
+                console.log(e);
                 (0, Errors_1.handleError)(e);
+                active = false;
                 return;
             }
         }
-    }
-    async importData() {
     }
 }
 new BruteForce().start();

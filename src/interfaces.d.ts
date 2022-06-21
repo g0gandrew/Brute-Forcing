@@ -4,4 +4,8 @@ interface RegistrationCredentials {
     ip: string
 }
 
-export { RegistrationCredentials }
+interface QuestionOptions {
+    clearConsole?: boolean,
+}
+
+export { RegistrationCredentials, QuestionOptions }

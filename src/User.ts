@@ -1,9 +1,10 @@
 // Importing
-import Input from './Input';
+import {closeApplication, Input} from './Helpers';
 import { FailedAuthentication, handleError } from "./Errors/Errors";
 import db from './Database';
 import { QueryTypes } from "sequelize";
 import Message from "./Messages";
+import { question } from './Helpers';
 const ip = require('ip');
 //
 
@@ -11,11 +12,15 @@ class User {
     private username: string | undefined;
     private password: string | undefined;
     private ip: string | undefined;
+    private connectionTries = 3;
+    private registrationTries = 3;
     constructor() {
         this.ip = ip.address(); // Getting user IP address
     }
     public async registration(): Promise<void> {
-        Message.registration();
+        if(this.registrationTries == 3) // It means that the user haven't already tried to register 
+            Message.registration();
+
         this.username = await Input.text('Username: ');
         this.password = await Input.text(`Password: `);
 
@@ -29,24 +34,39 @@ class User {
         if (await this.accountExists())
             Message.sucessfulAuthenticated();
         else {
-            if (Message.userWantsToTryAgain())
-                this.authentication();
+            if (this.connectionTries > 0) {
+                if(await question(`Would you like to try again? [Y/N] [${this.connectionTries} tries available]: `, {clearConsole: true})) {
+                    --this.connectionTries;
+                    this.authentication();
+                }
+                else
+                    closeApplication(0);
+            }
+            else  {
+                console.log(`You attempted to connect so many times!`)
+                closeApplication(0);
+            }
         }
     }
 
-    private async registerDataValidation() {
+    private async validRegistrationData(): Promise<boolean> {
         // Too short
-        if (this.username && this.username.length < 5)
-            throw new FailedAuthentication('You failed the authentication, username too short! (Minimum 5 characters)');
-        if (this.password && this.password.length < 8)
-            throw new FailedAuthentication('You failed the authentication, password too short! (Minimum 8 characters)');
+        if (this.username && this.username.length < 5) {
+            console.log('You failed the registration, username too short! (Minimum 5 characters)');
+        }
+        else if(this.password && this.password.length < 8){
+            console.log('You failed the registration, password too short! (Minimum 8 characters)');
+        }
+        else if (this.username && this.username.length > 20) {
+            console.log('You failed the registration, username too long! (Maximum 20 characters allowed)');
+        }
+        else if(this.password && this.password.length > 25){
+            console.log('You failed the registration, password too long! (Maximum 25 characters allowed)');
+        }
+        else
+            return true;
 
-        // Too long
-        if (this.username && this.username.length > 20)
-            throw new FailedAuthentication('You failed the authentication, username too long! (Maximum 20 characters allowed)');
-        if (this.password && this.password.length > 25)
-            throw new FailedAuthentication('You failed the authentication, password too long! (Maximum 25 characters allowed)');
-
+        return false;
     }
 
     private async accountExists(): Promise<boolean> {
@@ -59,8 +79,27 @@ class User {
 
     private async register() {
         try {
-            await this.registerDataValidation();
-            await db.query(`INSERT INTO user(username, password, ip) VALUES('${this.username}', '${this.password}', '${this.ip}')`);
+            if(await this.validRegistrationData())
+            {
+                await db.query(`INSERT INTO user(username, password, ip) VALUES('${this.username}', '${this.password}', '${this.ip}')`);
+                console.log('The account was registerd, now you can connect!');
+                await this.authentication();
+            }
+            else {
+                if(this.registrationTries > 0){
+                    if(await question(`Would you like to try again [Y/N]? [${this.registrationTries} tries available]: `,  {clearConsole: true})) {
+                        --this.registrationTries;
+                        await this.registration();
+                    }
+                    else{
+                        closeApplication(74);
+                    }
+                }
+                else {
+                    console.log(`You attempted to connect so many times!`)
+                    closeApplication(0);
+                }
+            }
         }
         catch (e: any) {
             handleError(e);

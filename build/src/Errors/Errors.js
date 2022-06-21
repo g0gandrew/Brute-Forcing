@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FailedIntro = exports.handleError = exports.FailedRegistration = exports.FailedAuthentication = void 0;
+exports.FailedIntro = exports.handleError = exports.FailedRegistration = exports.WrongAnswer = exports.FailedAuthentication = void 0;
+const Helpers_1 = require("../Helpers");
 class FailedRegistration extends Error {
     constructor(message) {
         super(message);
@@ -22,6 +23,15 @@ class FailedIntro extends Error {
     }
 }
 exports.FailedIntro = FailedIntro;
+class WrongAnswer extends Error {
+    constructor(message) {
+        super(message);
+        this.code = 103;
+    }
+}
+exports.WrongAnswer = WrongAnswer;
+function handleDBError(e) {
+}
 function handleError(e) {
     switch (e.constructor.name) {
         case 'FailedAuthentication': {
@@ -36,10 +46,17 @@ function handleError(e) {
             console.log(e.message);
             break;
         }
+        case 'WrongAnswer': {
+            console.log('Wrong answer!');
+            setTimeout(() => {
+                (0, Helpers_1.closeApplication)(74);
+            }, 5000);
+            break;
+        }
         default: {
             console.log('Application error! Please update your version if available!');
             setTimeout(() => {
-                return 'Application Error';
+                (0, Helpers_1.closeApplication)(70);
             }, 5000);
         }
     }
