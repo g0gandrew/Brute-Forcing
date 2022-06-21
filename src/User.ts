@@ -1,6 +1,6 @@
 // Importing
 import {closeApplication, Input} from './Helpers';
-import { FailedAuthentication, handleError } from "./Errors/Errors";
+import { handleError } from "./Errors/Errors";
 import db from './Database';
 import { QueryTypes } from "sequelize";
 import Message from "./Messages";
@@ -8,12 +8,16 @@ import { question } from './Helpers';
 const ip = require('ip');
 //
 
-class User {
+// Importing interfaces
+import { IUser } from './interfaces';
+//
+
+class User implements IUser {
     private username: string | undefined;
     private password: string | undefined;
     private ip: string | undefined;
-    private connectionTries = 3;
-    private registrationTries = 3;
+    private connectionTries: number = 3;
+    private registrationTries: number = 3;
     constructor() {
         this.ip = ip.address(); // Getting user IP address
     }
@@ -37,7 +41,7 @@ class User {
             if (this.connectionTries > 0) {
                 if(await question(`Would you like to try again? [Y/N] [${this.connectionTries} tries available]: `, {clearConsole: true})) {
                     --this.connectionTries;
-                    this.authentication();
+                    await this.authentication();
                 }
                 else
                     closeApplication(0);

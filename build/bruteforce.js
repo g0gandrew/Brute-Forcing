@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Errors_1 = require("./src/Errors/Errors");
 const Messages_1 = require("./src/Messages");
 const User_1 = require("./src/User");
+const Menu_1 = require("./src/Menu");
 //
 class BruteForce {
     constructor() {
@@ -14,6 +15,8 @@ class BruteForce {
         while (active) {
             try {
                 await Messages_1.default.alreadyMember() ? await this.user.authentication() : await this.user.registration(); // Displaying session
+                const menu = new Menu_1.default();
+                await menu.display();
                 active = false;
             }
             catch (e) {

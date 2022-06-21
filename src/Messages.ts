@@ -4,14 +4,15 @@ import {question} from './Helpers'
 //
 
 class Message {
-    constructor() {
-
-    }
 
     public static async alreadyMember(): Promise<boolean> {
         console.log('Welcome to Brute Force Application @ Gog Andrei');
         const answer: boolean = await question('Are you already registerd? [Y/N]')
         return answer;
+    }
+
+    public static menu(): void {
+        console.log(`- Menu - \n Select one option: \n 1. Create Variables list \n 2. Delete list  \n 3. Start Brute Forcing \n Choice: `);
     }
 
     public static registration(): void {

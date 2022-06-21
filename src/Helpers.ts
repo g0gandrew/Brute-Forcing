@@ -2,11 +2,11 @@ import { WrongAnswer } from "./Errors/Errors";
 const input = require('input');
 
 // Importing interfaces
-import {QuestionOptions} from './interfaces';
+import {IQuestionOptions} from './interfaces';
 //
 
 
-async function question(message: string, options?: QuestionOptions): Promise<boolean> {
+async function question(message: string, options?: IQuestionOptions): Promise<boolean> {
     const response: string = (await input.text(message)).toLocaleLowerCase();
     
     if(typeof options != undefined)

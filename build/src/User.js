@@ -31,7 +31,7 @@ class User {
             if (this.connectionTries > 0) {
                 if (await (0, Helpers_2.question)(`Would you like to try again? [Y/N] [${this.connectionTries} tries available]: `, { clearConsole: true })) {
                     --this.connectionTries;
-                    this.authentication();
+                    await this.authentication();
                 }
                 else
                     (0, Helpers_1.closeApplication)(0);

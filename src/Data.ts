@@ -2,11 +2,11 @@ class Data {
     public name: string;
     public data: Array<string> = [];
 
-    getData() {
+    getData(): Array<string> {
         return this.data;
     }
     
-    setData(rawData: string) {
+    setData(rawData: string): void {
         const processedData: Array<string> = rawData.split(',');
         this.data = processedData;
     } 
