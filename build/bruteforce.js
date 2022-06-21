@@ -7,19 +7,22 @@ const User_1 = require("./src/User");
 //
 class BruteForce {
     constructor() {
+        this.operationsMade = 0;
         this.user = new User_1.default();
     }
     async start() {
         let active = true;
         while (active) {
             try {
-                Messages_1.default.alreadyMember() ? this.user.authentication() : this.user.registration(); // Displaying session
+                await Messages_1.default.alreadyMember() ? await this.user.authentication() : await this.user.registration(); // Displaying session
             }
             catch (e) {
-                console.log(e.message);
                 (0, Errors_1.handleError)(e);
+                return;
             }
         }
+    }
+    async importData() {
     }
 }
 new BruteForce().start();

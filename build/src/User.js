@@ -1,35 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// Importing
+const Input_1 = require("./Input");
 const Errors_1 = require("./Errors/Errors");
 const Database_1 = require("./Database");
-const types_1 = require("sequelize/types");
+const sequelize_1 = require("sequelize");
 const Messages_1 = require("./Messages");
 const ip = require('ip');
 //
 class User {
     constructor() {
-        this.readline = require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout,
-        });
         this.ip = ip.address(); // Getting user IP address
     }
     async registration() {
-        this.readline.question('Enter your username: ', username => {
-            this.username = username;
-        });
-        this.readline.question('Enter your password: ', pass => {
-            this.password = pass;
-        });
+        Messages_1.default.registration();
+        this.username = await Input_1.default.text('Username: ');
+        this.password = await Input_1.default.text(`Password: `);
         await this.register();
     }
     async authentication() {
-        this.readline.question('Enter your username: ', username => {
-            this.username = username;
-        });
-        this.readline.question('Enter your password: ', pass => {
-            this.password = pass;
-        });
+        this.username = await Input_1.default.text('Enter your username: ');
+        this.password = await Input_1.default.text(`Enter your password: `);
         if (await this.accountExists())
             Messages_1.default.sucessfulAuthenticated();
         else {
@@ -50,7 +41,7 @@ class User {
             throw new Errors_1.FailedAuthentication('You failed the authentication, password too long! (Maximum 25 characters allowed)');
     }
     async accountExists() {
-        const accountExists = await Database_1.default.query(`SELECT id FROM user WHERE username = '${this.username}' && password = '${this.password}'`, { type: types_1.QueryTypes.SELECT });
+        const accountExists = await Database_1.default.query(`SELECT id FROM user WHERE username = '${this.username}' && password = '${this.password}'`, { type: sequelize_1.QueryTypes.SELECT });
         if (accountExists.length)
             return true;
         else

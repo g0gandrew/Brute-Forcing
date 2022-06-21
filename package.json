@@ -13,6 +13,7 @@
     "@types/node": "^18.0.0"
   },
   "dependencies": {
+    "input": "^1.0.1",
     "ip": "^1.1.8",
     "mysql2": "^2.3.3",
     "sequelize": "^6.21.0",

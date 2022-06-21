@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize/types";
+import { Sequelize } from 'sequelize'
 
 const sequelize = new Sequelize('securitate', 'andrei', 'andrei', {
     host: 'localhost',

@@ -16,17 +16,17 @@ class BruteForce {
 
         while (active) {
             try {
-                Message.alreadyMember() ? this.user.authentication() : this.user.registration();// Displaying session
-                
+                await Message.alreadyMember() ? await this.user.authentication() : await this.user.registration();// Displaying session
+
             } catch (e: any) {
-                console.log(e.message);
                 handleError(e);
+                return;
             }
         }
     }
 
     private async importData() {
-        
+
     }
 }
 

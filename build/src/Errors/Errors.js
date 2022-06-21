@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleError = exports.FailedRegistration = exports.FailedAuthentication = void 0;
+exports.FailedIntro = exports.handleError = exports.FailedRegistration = exports.FailedAuthentication = void 0;
 class FailedRegistration extends Error {
     constructor(message) {
         super(message);
@@ -15,9 +15,24 @@ class FailedAuthentication extends Error {
     }
 }
 exports.FailedAuthentication = FailedAuthentication;
+class FailedIntro extends Error {
+    constructor(message) {
+        super(message);
+        this.code = 102;
+    }
+}
+exports.FailedIntro = FailedIntro;
 function handleError(e) {
     switch (e.constructor.name) {
         case 'FailedAuthentication': {
+            console.log(e.message);
+            break;
+        }
+        case 'FailedIntro': {
+            console.log(e.message);
+            break;
+        }
+        case 'FailedRegistration': {
             console.log(e.message);
             break;
         }

@@ -2,7 +2,7 @@
 import Input from './Input';
 import { FailedAuthentication, handleError } from "./Errors/Errors";
 import db from './Database';
-import { QueryTypes } from"sequelize/types";
+import { QueryTypes } from "sequelize";
 import Message from "./Messages";
 const ip = require('ip');
 //
@@ -15,25 +15,16 @@ class User {
         this.ip = ip.address(); // Getting user IP address
     }
     public async registration(): Promise<void> {
-        Input.question('Enter your username: ', (username: string) => {
-            this.username = username;
-        })
-
-        Input.question('Enter your password: ', (pass: string) => {
-            this.password = pass
-        })
+        Message.registration();
+        this.username = await Input.text('Username: ');
+        this.password = await Input.text(`Password: `);
 
         await this.register();
     }
 
     public async authentication(): Promise<void> {
-        Input.question('Enter your username: ', (username: string) => {
-            this.username = username;
-        })
-
-        Input.question('Enter your password: ', (pass: string) => {
-            this.password = pass;
-        })
+        this.username = await Input.text('Enter your username: ');
+        this.password = await Input.text(`Enter your password: `);
 
         if (await this.accountExists())
             Message.sucessfulAuthenticated();
@@ -49,12 +40,12 @@ class User {
             throw new FailedAuthentication('You failed the authentication, username too short! (Minimum 5 characters)');
         if (this.password && this.password.length < 8)
             throw new FailedAuthentication('You failed the authentication, password too short! (Minimum 8 characters)');
-        
+
         // Too long
-        if(this.username && this.username.length > 20)
-             throw new FailedAuthentication('You failed the authentication, username too long! (Maximum 20 characters allowed)');
+        if (this.username && this.username.length > 20)
+            throw new FailedAuthentication('You failed the authentication, username too long! (Maximum 20 characters allowed)');
         if (this.password && this.password.length > 25)
-             throw new FailedAuthentication('You failed the authentication, password too long! (Maximum 25 characters allowed)');
+            throw new FailedAuthentication('You failed the authentication, password too long! (Maximum 25 characters allowed)');
 
     }
 

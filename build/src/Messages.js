@@ -1,22 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// Importing
+const Errors_1 = require("./Errors/Errors");
+const Input_1 = require("./Input");
+//
 class Message {
     constructor() {
-        Message.readline = require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout,
-        });
     }
-    static alreadyMember() {
-        let userAlreadyRegisterd = false;
-        this.readline.question(`Are you already registerd? [Y/N]`, (answer) => {
-            userAlreadyRegisterd = answer === 'Y' ? true : false;
-        });
-        return userAlreadyRegisterd;
+    static async alreadyMember() {
+        console.log('Welcome to Brute Force Application @ Gog Andrei');
+        const userAlreadyRegisterd = await Input_1.default.text(`Are you already registerd? [Y/N]`);
+        if (userAlreadyRegisterd.toLocaleLowerCase() === 'y')
+            return true;
+        else if (userAlreadyRegisterd.toLocaleLowerCase() === 'n')
+            return false;
+        throw new Errors_1.FailedIntro('You entered a wrong choice');
     }
     static registration() {
-        console.log('Welcome to Brute Force Application @ Gog Andrei');
-        console.log('Before we start, we must register you in our database, for legal purposes!');
+        console.log('Your account data will be stored in our database among your actions - for legal purposes!');
     }
     static sucessfulAuthenticated() {
         console.log('Welcome to Brute Force Application @ Gog Andrei');
@@ -24,9 +25,6 @@ class Message {
     static userWantsToTryAgain() {
         let userWantsToTryAgain = false;
         console.log(`Incorrect authentication data!`);
-        this.readline.question(`Would you like to try again? [Y/N]`, (answer) => {
-            userWantsToTryAgain = answer === 'Y' ? true : false;
-        });
         return userWantsToTryAgain;
     }
 }

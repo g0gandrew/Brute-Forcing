@@ -14,9 +14,26 @@ class FailedAuthentication extends Error {
     }
 }
 
+class FailedIntro extends Error {
+    public code: number = 102;
+
+    constructor(message: string) {
+        super(message);
+    }
+}
+
+
 function handleError(e: any) {
     switch (e.constructor.name) {
         case 'FailedAuthentication': {
+            console.log(e.message);
+            break;
+        }
+        case 'FailedIntro': {
+            console.log(e.message);
+            break;
+        }
+        case 'FailedRegistration': {
             console.log(e.message);
             break;
         }
@@ -30,9 +47,10 @@ function handleError(e: any) {
 }
 
 /*
-100: Faild registration
-101: Faild authentication
+100: Failed registration
+101: Failed authentication
+102: Failed intro
 */
 
 
-export { FailedAuthentication, FailedRegistration, handleError }
+export { FailedAuthentication, FailedRegistration, handleError, FailedIntro }
