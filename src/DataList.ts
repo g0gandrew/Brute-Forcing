@@ -13,10 +13,6 @@ class DataList {
         this.data.push(data);
     }
 
-    public modifyList(elementName: string, data: string, newName: string) {
-
-    }
-
     public clean() {
         this.data = [];
     }

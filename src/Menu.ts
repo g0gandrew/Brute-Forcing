@@ -3,19 +3,17 @@ import Data from './Data';
 import Helpers, { } from './Helpers';
 import DataList from './DataList'
 import { IDisplayList } from './interfaces';
-import Message from './Messages';
 import sleep from 'thread-sleep';
-import { clear } from 'console';
 //
 
 class Menu {
-    private dataList: DataList = new DataList();
+    public dataList: DataList = new DataList();
     public closed: boolean = false;
     public async display() {
         // Clearing console
         console.clear();
         //
-        const choice: number = parseInt(await Helpers.input(`- Menu - \n Select one option: \n 1. Display Variables list \n 2. Create Variables list \n 3. Modify Variables List \n 4. Delete Variables list  \n 5. Brute Force Menu  \n Choice: `));
+        const choice: number = parseInt(await Helpers.input(`- Menu - \n Select one option: \n 1. Display Variables list \n 2. Create Variables list \n 3. Modify Variables List \n 4. Delete Variables list  \n 5. Brute Force Menu \n 6. Exit \n Choice: `));
         await this.menu(choice)
     }
 
@@ -38,8 +36,17 @@ class Menu {
                 break;
             }
             case 5: {
-                this.exit();
+                if(this.dataList.getList().length) 
+                     this.exitMenu();
+                else {
+                    console.clear();
+                    console.log(`You must have at least one list created before accesing BruteForce Menu!`); 
+                    sleep(3500);
+                }
                 break;
+            }
+            case 6: {
+                Helpers.closeApplication(0);
             }
             default: {
                 if (await Helpers.question('Wrong choice! Would you like to try again? [Y/N]: ', { clearConsole: true }))
@@ -157,7 +164,7 @@ class Menu {
                 await this.menu(2);
     }
 
-    private exit(): void {
+    private exitMenu(): void {
         this.closed = true;
         return;
     }

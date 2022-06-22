@@ -15,7 +15,7 @@ class Menu {
         // Clearing console
         console.clear();
         //
-        const choice = parseInt(await Helpers_1.default.input(`- Menu - \n Select one option: \n 1. Display Variables list \n 2. Create Variables list \n 3. Modify Variables List \n 4. Delete Variables list  \n 5. Brute Force Menu  \n Choice: `));
+        const choice = parseInt(await Helpers_1.default.input(`- Menu - \n Select one option: \n 1. Display Variables list \n 2. Create Variables list \n 3. Modify Variables List \n 4. Delete Variables list  \n 5. Brute Force Menu \n 6. Exit \n Choice: `));
         await this.menu(choice);
     }
     async menu(choice) {
@@ -37,8 +37,17 @@ class Menu {
                 break;
             }
             case 5: {
-                this.exit();
+                if (this.dataList.getList().length)
+                    this.exitMenu();
+                else {
+                    console.clear();
+                    console.log(`You must have at least one list created before accesing BruteForce Menu!`);
+                    (0, thread_sleep_1.default)(3500);
+                }
                 break;
+            }
+            case 6: {
+                Helpers_1.default.closeApplication(0);
             }
             default: {
                 if (await Helpers_1.default.question('Wrong choice! Would you like to try again? [Y/N]: ', { clearConsole: true }))
@@ -137,7 +146,7 @@ class Menu {
         else if (await Helpers_1.default.question(`No list created! Would you like to create one? [Y/N]: `, { clearConsole: true }))
             await this.menu(2);
     }
-    exit() {
+    exitMenu() {
         this.closed = true;
         return;
     }

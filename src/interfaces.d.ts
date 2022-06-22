@@ -13,10 +13,31 @@ interface IUser {
     authentication: Function
 }
 
+interface IBruteForceConfig {
+    targetURL: string,
+    parametersAmount: number,
+    urlParameters: Array<string>
+}
+
+interface IProcessedTargetURL { 
+    targetURL: string,
+    parametersAmount: number,
+    urlParameters: Array<string>
+}
+
+
+interface IBruteForceURLs {
+
+}
+
+interface IRequestParameterLinkedData {
+    [key?: string]: Array<string>
+}
+
 interface IDisplayList {
     deelay: boolean
     time: number
 }
 
 
-export { IRegistrationCredentials, IQuestionOptions, IUser, IDisplayList }
+export { IRegistrationCredentials, IRequestParameterLinkedData, IProcessedTargetURL,  IBruteForceConfig, IQuestionOptions, IUser, IDisplayList }

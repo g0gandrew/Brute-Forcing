@@ -11,8 +11,6 @@ class DataList {
     insertData(data) {
         this.data.push(data);
     }
-    modifyList(elementName, data, newName) {
-    }
     clean() {
         this.data = [];
     }
