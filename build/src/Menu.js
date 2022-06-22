@@ -4,18 +4,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Data_1 = require("./Data");
 const Helpers_1 = require("./Helpers");
 const DataList_1 = require("./DataList");
-const Messages_1 = require("./Messages");
 const thread_sleep_1 = require("thread-sleep");
 //
 class Menu {
     constructor() {
         this.dataList = new DataList_1.default();
+        this.closed = false;
     }
     async display() {
         // Clearing console
         console.clear();
         //
-        const choice = parseInt(await Helpers_1.default.input(`- Menu - \n Select one option: \n 1. Display Variables list \n 2. Create Variables list \n 3. Modify Variables List \n 4. Delete Variables list  \n 5. Start Brute Forcing \n Choice: `));
+        const choice = parseInt(await Helpers_1.default.input(`- Menu - \n Select one option: \n 1. Display Variables list \n 2. Create Variables list \n 3. Modify Variables List \n 4. Delete Variables list  \n 5. Brute Force Menu  \n Choice: `));
         await this.menu(choice);
     }
     async menu(choice) {
@@ -37,7 +37,7 @@ class Menu {
                 break;
             }
             case 5: {
-                this.bruteforce();
+                this.exit();
                 break;
             }
             default: {
@@ -137,8 +137,9 @@ class Menu {
         else if (await Helpers_1.default.question(`No list created! Would you like to create one? [Y/N]: `, { clearConsole: true }))
             await this.menu(2);
     }
-    bruteforce() {
-        Messages_1.default.bruteforce();
+    exit() {
+        this.closed = true;
+        return;
     }
 }
 exports.default = Menu;

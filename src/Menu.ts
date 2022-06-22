@@ -5,16 +5,17 @@ import DataList from './DataList'
 import { IDisplayList } from './interfaces';
 import Message from './Messages';
 import sleep from 'thread-sleep';
+import { clear } from 'console';
 //
 
 class Menu {
     private dataList: DataList = new DataList();
-
+    public closed: boolean = false;
     public async display() {
         // Clearing console
         console.clear();
         //
-        const choice: number = parseInt(await Helpers.input(`- Menu - \n Select one option: \n 1. Display Variables list \n 2. Create Variables list \n 3. Modify Variables List \n 4. Delete Variables list  \n 5. Start Brute Forcing \n Choice: `));
+        const choice: number = parseInt(await Helpers.input(`- Menu - \n Select one option: \n 1. Display Variables list \n 2. Create Variables list \n 3. Modify Variables List \n 4. Delete Variables list  \n 5. Brute Force Menu  \n Choice: `));
         await this.menu(choice)
     }
 
@@ -37,7 +38,7 @@ class Menu {
                 break;
             }
             case 5: {
-                this.bruteforce();
+                this.exit();
                 break;
             }
             default: {
@@ -156,8 +157,9 @@ class Menu {
                 await this.menu(2);
     }
 
-    private bruteforce() {
-        Message.bruteforce();
+    private exit(): void {
+        this.closed = true;
+        return;
     }
 }
 
