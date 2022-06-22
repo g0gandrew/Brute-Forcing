@@ -1,4 +1,4 @@
-import { closeApplication } from "../Helpers";
+import Helpers from "../Helpers";
 
 class FailedRegistration extends Error {
     public code: number = 100;
@@ -30,7 +30,7 @@ class WrongAnswer extends Error {
     constructor(message: string) {
         super(message);
     }
-    
+
 }
 
 function handleDBError(e: any) {
@@ -51,17 +51,17 @@ function handleError(e: any) {
             console.log(e.message);
             break;
         }
-        case 'WrongAnswer':  {
+        case 'WrongAnswer': {
             console.log('Wrong answer!')
-            setTimeout(() => {               
-                 closeApplication(74);
+            setTimeout(() => {
+                Helpers.closeApplication(74);
             }, 5000);
             break;
         }
         default: {
             console.log('Application error! Please update your version if available!');
             setTimeout(() => {
-                closeApplication(70);
+                Helpers.closeApplication(70);
             }, 5000)
         }
     }

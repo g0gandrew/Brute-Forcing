@@ -49,14 +49,14 @@ function handleError(e) {
         case 'WrongAnswer': {
             console.log('Wrong answer!');
             setTimeout(() => {
-                (0, Helpers_1.closeApplication)(74);
+                Helpers_1.default.closeApplication(74);
             }, 5000);
             break;
         }
         default: {
             console.log('Application error! Please update your version if available!');
             setTimeout(() => {
-                (0, Helpers_1.closeApplication)(70);
+                Helpers_1.default.closeApplication(70);
             }, 5000);
         }
     }

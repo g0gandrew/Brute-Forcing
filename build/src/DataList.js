@@ -3,16 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //
 class DataList {
     constructor() {
-        this.lists = [];
+        this.data = [];
     }
     getList() {
-        return this.lists;
+        return this.data;
     }
     insertData(data) {
-        this.lists.push(data);
+        this.data.push(data);
+    }
+    modifyList(elementName, data, newName) {
     }
     clean() {
-        this.lists = [];
+        this.data = [];
     }
 }
 exports.default = DataList;

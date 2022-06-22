@@ -15,7 +15,8 @@ interface IUser {
 
 interface IDisplayList {
     deelay: boolean
+    time: number
 }
 
 
-export { IRegistrationCredentials, IQuestionOptions, IUser, IDisplayList}
+export { IRegistrationCredentials, IQuestionOptions, IUser, IDisplayList }

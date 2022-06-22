@@ -17,6 +17,7 @@
     "ip": "^1.1.8",
     "mysql2": "^2.3.3",
     "sequelize": "^6.21.0",
+    "thread-sleep": "^2.2.0",
     "tsc": "^2.0.4",
     "typescript": "^4.7.4"
   }

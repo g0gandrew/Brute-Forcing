@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // Importing
-const Helpers_1 = require("./Helpers");
 const Errors_1 = require("./Errors/Errors");
 const Database_1 = require("./Database");
 const sequelize_1 = require("sequelize");
 const Messages_1 = require("./Messages");
-const Helpers_2 = require("./Helpers");
+const Helpers_1 = require("./Helpers");
 const ip = require('ip');
 //
 class User {
@@ -18,27 +17,27 @@ class User {
     async registration() {
         if (this.registrationTries == 3) // It means that the user haven't already tried to register 
             Messages_1.default.registration();
-        this.username = await Helpers_1.Input.text('Username: ');
-        this.password = await Helpers_1.Input.text(`Password: `);
+        this.username = await Helpers_1.default.input('Username: ');
+        this.password = await Helpers_1.default.input(`Password: `);
         await this.register();
     }
     async authentication() {
-        this.username = await Helpers_1.Input.text('Enter your username: ');
-        this.password = await Helpers_1.Input.text(`Enter your password: `);
+        this.username = await Helpers_1.default.input('Enter your username: ');
+        this.password = await Helpers_1.default.input(`Enter your password: `);
         if (await this.accountExists())
             Messages_1.default.sucessfulAuthenticated();
         else {
             if (this.connectionTries > 0) {
-                if (await (0, Helpers_2.question)(`Would you like to try again? [Y/N] [${this.connectionTries} tries available]: `, { clearConsole: true })) {
+                if (await Helpers_1.default.question(`Would you like to try again? [Y/N] [${this.connectionTries} tries available]: `, { clearConsole: true })) {
                     --this.connectionTries;
                     await this.authentication();
                 }
                 else
-                    (0, Helpers_1.closeApplication)(0);
+                    Helpers_1.default.closeApplication(0);
             }
             else {
                 console.log(`You attempted to connect so many times!`);
-                (0, Helpers_1.closeApplication)(0);
+                Helpers_1.default.closeApplication(0);
             }
         }
     }
@@ -76,17 +75,17 @@ class User {
             }
             else {
                 if (this.registrationTries > 0) {
-                    if (await (0, Helpers_2.question)(`Would you like to try again [Y/N]? [${this.registrationTries} tries available]: `, { clearConsole: true })) {
+                    if (await Helpers_1.default.question(`Would you like to try again [Y/N]? [${this.registrationTries} tries available]: `, { clearConsole: true })) {
                         --this.registrationTries;
                         await this.registration();
                     }
                     else {
-                        (0, Helpers_1.closeApplication)(74);
+                        Helpers_1.default.closeApplication(74);
                     }
                 }
                 else {
                     console.log(`You attempted to connect so many times!`);
-                    (0, Helpers_1.closeApplication)(0);
+                    Helpers_1.default.closeApplication(0);
                 }
             }
         }

@@ -3,18 +3,22 @@ import Data from './Data';
 //
 
 class DataList {
-    public lists: Array<Data> = [];
+    public data: Array<Data> = [];
 
     public getList() {
-        return this.lists;
+        return this.data;
     }
 
     public insertData(data: Data) {
-        this.lists.push(data);
+        this.data.push(data);
+    }
+
+    public modifyList(elementName: string, data: string, newName: string) {
+
     }
 
     public clean() {
-        this.lists = [];
+        this.data = [];
     }
 }
 

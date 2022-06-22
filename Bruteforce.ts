@@ -13,22 +13,18 @@ class BruteForce {
 
     public async start() {
         let active = true;
+        await Message.alreadyMember() ? await this.user.authentication() : await this.user.registration(); // Displaying session
+        const menu = new Menu();
 
         while (active) {
             try {
-                await Message.alreadyMember() ? await this.user.authentication() : await this.user.registration();// Displaying session
-                const menu = new Menu();
                 await menu.display();
-
-                active = false;
-
             } catch (e: any) {
                 console.log(e)
                 handleError(e);
                 active = false;
                 return;
             }
-
         }
     }
 }
